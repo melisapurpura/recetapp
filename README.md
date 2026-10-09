@@ -86,3 +86,9 @@ https://melisapurpura.github.io/recetapp/
 
 Se publica con GitHub Pages desde la rama `main`, carpeta raíz: cada push a
 `main` actualiza el sitio. No hay paso de build que ejecutar.
+
+### Al cambiar `styles.css` o `app.js`
+
+Súbele uno al `?v=` con que `index.html` los enlaza. GitHub Pages cachea los
+archivos diez minutos; sin eso, un navegador puede quedarse con el HTML nuevo y
+el CSS viejo durante ese rato.
