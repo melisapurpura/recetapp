@@ -35,7 +35,7 @@ ROBOTS = BASE + "/robots.txt"
 
 USER_AGENT = (
     "RecetAppBot/0.1 (comparador de precios de medicamentos; "
-    "+https://github.com/melisapurpura/RecetApp)"
+    "+https://github.com/melisapurpura/recetapp)"
 )
 
 ESPERA = 1.5          # segundos entre consultas

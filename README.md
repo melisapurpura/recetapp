@@ -79,3 +79,10 @@ RecetApp **solo compara precios** entre productos con la misma sustancia activa
 y la misma concentración. No da consejo médico, no sugiere cambiar un
 medicamento por otro, no recomienda dosis y no reemplaza lo que te indique tu
 médico o tu farmacéutico.
+
+## El sitio publicado
+
+https://melisapurpura.github.io/recetapp/
+
+Se publica con GitHub Pages desde la rama `main`, carpeta raíz: cada push a
+`main` actualiza el sitio. No hay paso de build que ejecutar.
