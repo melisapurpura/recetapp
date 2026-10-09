@@ -101,6 +101,10 @@ y solo para regenerarla— y se enlaza desde las etiquetas Open Graph de
 `index.html` con url absoluta.
 
 No lleva precios a propósito: las redes cachean la vista previa por mucho
-tiempo y terminaría anunciando precios viejos. Si la cambias, súbele el `?v=`
-en las etiquetas `og:image` y `twitter:image`, y refresca la caché de LinkedIn
-en https://www.linkedin.com/post-inspector/.
+tiempo y terminaría anunciando precios viejos.
+
+Si la cambias, **renombra el archivo** (`vista-previa-2.png`) y actualiza
+`og:image` y `twitter:image`. No uses `?v=`: algunos rastreadores se atoran con
+la cadena de consulta. Después pasa el enlace por
+https://www.linkedin.com/post-inspector/ para que LinkedIn relea los
+metadatos; su caché dura cerca de una semana.
