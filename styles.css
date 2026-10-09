@@ -7,12 +7,12 @@
 
   --tinta: #f0ecfa;
   --tinta-suave: #a99fc6;
-  --fondo: #130f1e;
-  --tarjeta: #1d1730;
-  --borde: #342a52;
+  --fondo: #08060f;
+  --tarjeta: #181228;
+  --borde: #2f2649;
   --acento: #c3a0ff;
   --acento-fuerte: #7b4dff;
-  --acento-fondo: #241a3f;
+  --acento-fondo: #211738;
   --aviso-fondo: #3a2a66;
   --aviso-tinta: #f3e9ff;
   --error: #ff9fb0;
@@ -52,6 +52,9 @@ body {
   font-size: 1.5rem;
   letter-spacing: -0.01em;
 }
+
+.marca__inicio { color: var(--acento); }
+.marca__fin { color: var(--tinta); }
 
 .lema {
   margin: 0.25rem 0 1rem;
@@ -133,7 +136,11 @@ main { padding-bottom: 2rem; }
 
 /* ---------- chips de principios activos ---------- */
 
-.sugerencias { margin-top: 1.5rem; }
+.sugerencias {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--borde);
+}
 
 .sugerencias__titulo {
   margin: 0 0 0.75rem;
