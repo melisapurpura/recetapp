@@ -429,6 +429,86 @@
     return orden;
   }
 
+  /* Para la portada: los grupos donde más se ahorra cambiando de marca.
+     Se exigen dos marcas distintas, si no estaríamos comparando dos empaques
+     del mismo laboratorio y eso no es cambiar de marca. */
+  function gruposConMasAhorro(cuantos) {
+    var comparables = filas.filter(function (fila) { return fila.comparable; });
+
+    return agrupar(comparables)
+      .map(function (grupo) {
+        var marcas = [];
+        grupo.filas.forEach(function (fila) {
+          var marca = normalizar(fila.marca);
+          if (marca && marcas.indexOf(marca) === -1) { marcas.push(marca); }
+        });
+        var barata = grupo.filas[0];
+        var cara = grupo.filas[grupo.filas.length - 1];
+        return {
+          grupo: grupo,
+          marcas: marcas.length,
+          barata: barata,
+          cara: cara,
+          veces: barata.precioUnidadNum ? cara.precioUnidadNum / barata.precioUnidadNum : 0
+        };
+      })
+      .filter(function (d) { return d.marcas > 1 && d.veces > 1; })
+      .sort(function (a, b) { return b.veces - a.veces; })
+      .slice(0, cuantos);
+  }
+
+  function seccionDestacada(destacado) {
+    var grupo = destacado.grupo;
+    var seccion = nodo('section', 'grupo');
+
+    var titulo = nodo('h3', 'grupo__titulo');
+    titulo.appendChild(document.createTextNode(
+      grupo.principio_activo + ' · ' + grupo.concentracion + ' '));
+    titulo.appendChild(nodo('span', 'destacado__veces',
+      porcentaje.format(destacado.veces) + 'x de diferencia'));
+    seccion.appendChild(titulo);
+
+    seccion.appendChild(nodo('p', 'grupo__resumen',
+      'De ' + pesosUnidad(destacado.barata.precioUnidadNum) + ' a ' +
+      pesosUnidad(destacado.cara.precioUnidadNum) + ' por unidad, entre ' +
+      plural(destacado.marcas, 'marca', 'marcas') + '.'));
+
+    var contenedor = nodo('div', 'tarjetas');
+    contenedor.appendChild(tarjeta(destacado.barata, true));
+    contenedor.appendChild(tarjeta(destacado.cara, false));
+    seccion.appendChild(contenedor);
+
+    if (grupo.filas.length > 2) {
+      var boton = nodo('button', 'destacado__mas',
+        'Ver las ' + grupo.filas.length + ' opciones de ' +
+        grupo.principio_activo + ' ' + grupo.concentracion + ' →');
+      boton.type = 'button';
+      boton.addEventListener('click', function () {
+        campo.value = grupo.principio_activo + ' ' + grupo.concentracion;
+        buscar(campo.value);
+        window.scrollTo(0, 0);
+      });
+      seccion.appendChild(boton);
+    }
+
+    return seccion;
+  }
+
+  function pintarPortada() {
+    var destacados = gruposConMasAhorro(5);
+    if (!destacados.length) { return; }
+
+    var portada = nodo('section', 'destacados');
+    portada.appendChild(nodo('h2', 'destacados__titulo', 'Mayores ahorros de hoy'));
+    portada.appendChild(nodo('p', 'destacados__bajada',
+      'Mismo principio activo y misma concentración, muy distinto precio por ' +
+      'unidad. Toca una tarjeta para ver la alternativa más barata.'));
+    destacados.forEach(function (destacado) {
+      portada.appendChild(seccionDestacada(destacado));
+    });
+    resultados.appendChild(portada);
+  }
+
   function buscar(consulta) {
     resultados.textContent = '';
 
@@ -436,8 +516,9 @@
 
     if (!palabras.length) {
       sugerencias.hidden = false;
-      estado.textContent = 'Toca un principio activo, o escribe el nombre, la ' +
-        'marca o el principio activo del medicamento.';
+      estado.textContent = 'Busca tu medicamento por nombre, marca o principio ' +
+        'activo, o mira dónde hay más diferencia de precio hoy.';
+      pintarPortada();
       return;
     }
 
@@ -541,7 +622,10 @@
     campo.blur();
   });
 
-  fetch(RUTA_CSV)
+  // 'no-cache' revalida con el servidor en cada carga: si el CSV no cambió
+  // responde 304 y no cuesta nada, pero quien ya visitó el sitio no se queda
+  // con precios viejos en caché.
+  fetch(RUTA_CSV, { cache: 'no-cache' })
     .then(function (respuesta) {
       if (!respuesta.ok) {
         throw new Error('el servidor respondió ' + respuesta.status +

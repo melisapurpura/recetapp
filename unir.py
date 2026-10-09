@@ -28,6 +28,18 @@ BASE = os.path.join("data", "base.csv")
 HOY = os.path.join("data", "scrapeado-hoy.csv")
 SALIDA = os.path.join("data", "precios.csv")
 
+# Fichas que la farmacia publica con la sustancia equivocada. Entran mal desde
+# el origen y no se pueden comparar sin engañar a quien consulta, así que no
+# pasan a precios.csv. No se corrigen aquí: corregir la sustancia sería
+# inventar un dato. Si la farmacia arregla su ficha, se quita de esta lista.
+#
+# Para verificar una: abre la url y mira qué principio activo declara.
+FICHAS_DESCARTADAS = {
+    "https://www.larebajavirtual.com/asa-mk-100-mg-mk-46965/p":
+        "La Rebaja la publica como ACETAMINOFEN, pero ASA es ácido "
+        "acetilsalicílico (verificado el 2026-10-08 en su propio catálogo).",
+}
+
 RE_CONCENTRACION = re.compile(r"(\d+(?:[.,]\d+)?)\s*(MG|MCG|G|UI)")
 A_MG = {"MCG": 0.001, "MG": 1.0, "G": 1000.0, "UI": 1.0}
 
@@ -67,11 +79,20 @@ def orden(fila):
 
 
 def unir(base, hoy):
-    """Devuelve (filas, reemplazadas). Lo de hoy pisa lo de la base por url."""
+    """Devuelve (filas, reemplazadas, descartadas).
+
+    Lo de hoy pisa lo de la base por url, y las fichas mal etiquetadas en el
+    origen no pasan.
+    """
     urls_hoy = {fila["url"] for fila in hoy if fila["url"]}
     conservadas = [fila for fila in base if fila["url"] not in urls_hoy]
     reemplazadas = len(base) - len(conservadas)
-    return sorted(conservadas + hoy, key=orden), reemplazadas
+
+    juntas = conservadas + hoy
+    limpias = [fila for fila in juntas if fila["url"] not in FICHAS_DESCARTADAS]
+    descartadas = len(juntas) - len(limpias)
+
+    return sorted(limpias, key=orden), reemplazadas, descartadas
 
 
 def escribir(filas, salida):
@@ -109,12 +130,16 @@ def main(argv=None):
         print(error, file=sys.stderr)
         return 1
 
-    filas, reemplazadas = unir(base, hoy)
+    filas, reemplazadas, descartadas = unir(base, hoy)
     escribir(filas, argumentos.salida)
 
     print("base: %d filas" % len(base))
     print("hoy:  %d filas (%d reemplazan a la base, %d nuevas)"
           % (len(hoy), reemplazadas, len(hoy) - reemplazadas))
+    if descartadas:
+        print("descartadas por ficha mal etiquetada en el origen: %d" % descartadas)
+        for url, razon in FICHAS_DESCARTADAS.items():
+            print("  %s\n    %s" % (url, razon))
     print("%s: %d filas" % (argumentos.salida, len(filas)))
     return 0
 

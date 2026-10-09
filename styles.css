@@ -1,36 +1,24 @@
 /* RecetApp · estilos escritos primero para celular.
    Un solo punto de quiebre (40rem) para tablet y escritorio. */
 
+/* Tema oscuro morado, fijo: no depende del tema del sistema. */
 :root {
-  --tinta: #16222c;
-  --tinta-suave: #51636f;
-  --fondo: #f4f6f8;
-  --tarjeta: #ffffff;
-  --borde: #dde3e8;
-  --acento: #0b6b5e;
-  --acento-fondo: #e6f3f0;
-  --aviso-fondo: #fff4d6;
-  --aviso-tinta: #5a4300;
-  --error: #8a1c1c;
-  --error-fondo: #fdecec;
+  color-scheme: dark;
+
+  --tinta: #f0ecfa;
+  --tinta-suave: #a99fc6;
+  --fondo: #130f1e;
+  --tarjeta: #1d1730;
+  --borde: #342a52;
+  --acento: #c3a0ff;
+  --acento-fuerte: #7b4dff;
+  --acento-fondo: #241a3f;
+  --aviso-fondo: #3a2a66;
+  --aviso-tinta: #f3e9ff;
+  --error: #ff9fb0;
+  --error-fondo: #3a1526;
   --radio: 12px;
   --toque: 44px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --tinta: #e9eef2;
-    --tinta-suave: #a7b6c0;
-    --fondo: #121a20;
-    --tarjeta: #1b252d;
-    --borde: #2d3a44;
-    --acento: #5fd3bf;
-    --acento-fondo: #15322d;
-    --aviso-fondo: #3a2f0a;
-    --aviso-tinta: #ffe39a;
-    --error: #ff9c9c;
-    --error-fondo: #3a1a1a;
-  }
 }
 
 * { box-sizing: border-box; }
@@ -226,8 +214,8 @@ main { padding-bottom: 2rem; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--tarjeta);
-  background: var(--acento);
+  color: #ffffff;
+  background: var(--acento-fuerte);
   border-radius: 999px;
 }
 
@@ -455,4 +443,55 @@ main { padding-bottom: 2rem; }
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--acento);
+}
+
+/* ---------- portada: mayores ahorros ---------- */
+
+.destacados { margin-top: 1.5rem; }
+
+.destacados__titulo {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.destacados__bajada {
+  margin: 0.375rem 0 0;
+  font-size: 0.9375rem;
+  color: var(--tinta-suave);
+}
+
+.destacado__veces {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: middle;
+  color: #ffffff;
+  background: var(--acento-fuerte);
+  border-radius: 999px;
+}
+
+.destacado__mas {
+  display: block;
+  width: 100%;
+  min-height: var(--toque);
+  margin-top: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-align: left;
+  color: var(--acento);
+  background: transparent;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.destacado__mas:hover { border-color: var(--acento); }
+
+.destacado__mas:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 1px;
 }
