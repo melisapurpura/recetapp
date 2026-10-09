@@ -92,3 +92,15 @@ Se publica con GitHub Pages desde la rama `main`, carpeta raíz: cada push a
 Súbele uno al `?v=` con que `index.html` los enlaza. GitHub Pages cachea los
 archivos diez minutos; sin eso, un navegador puede quedarse con el HTML nuevo y
 el CSS viejo durante ese rato.
+
+## Vista previa al compartir
+
+`vista-previa.png` (1200×630) es la imagen que muestran LinkedIn, WhatsApp y
+compañía. Se genera con `python vista_previa.py` —lo único que necesita Pillow,
+y solo para regenerarla— y se enlaza desde las etiquetas Open Graph de
+`index.html` con url absoluta.
+
+No lleva precios a propósito: las redes cachean la vista previa por mucho
+tiempo y terminaría anunciando precios viejos. Si la cambias, súbele el `?v=`
+en las etiquetas `og:image` y `twitter:image`, y refresca la caché de LinkedIn
+en https://www.linkedin.com/post-inspector/.
