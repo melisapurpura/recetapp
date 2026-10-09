@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RecetApp · compara precios de medicamentos en Colombia</title>
+<meta name="description" content="Compara precios de medicamentos entre farmacias de Colombia y encuentra la opción más barata con la misma sustancia.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="encabezado">
+  <div class="contenedor">
+    <h1 class="marca">RecetApp</h1>
+    <p class="lema">Compara precios de medicamentos entre farmacias de Colombia.</p>
+    <form class="buscador" role="search" id="formulario">
+      <label class="buscador__etiqueta" for="consulta">
+        Busca por nombre, marca o principio activo
+      </label>
+      <input
+        class="buscador__campo"
+        id="consulta"
+        type="search"
+        name="consulta"
+        placeholder="losartán, dolex, genfar…"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false"
+        inputmode="search"
+        enterkeyhint="search">
+    </form>
+  </div>
+</header>
+
+<p class="aviso">
+  RecetApp compara precios; no reemplaza la indicación de tu médico o farmacéutico.
+</p>
+
+<main class="contenedor" id="principal">
+  <noscript>
+    <p class="estado estado--error">
+      RecetApp necesita JavaScript para leer los precios. Actívalo en tu
+      navegador y vuelve a cargar la página.
+    </p>
+  </noscript>
+
+  <p class="fecha-datos" id="fecha-datos" hidden></p>
+
+  <p class="estado" id="estado" role="status" aria-live="polite">Cargando precios…</p>
+
+  <section class="sugerencias" id="sugerencias" hidden>
+    <h2 class="sugerencias__titulo" id="sugerencias-titulo">
+      Principios activos con precios cargados
+    </h2>
+    <div class="chips" id="chips"></div>
+  </section>
+
+  <div id="resultados"></div>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <p id="fuente" class="pie__fuente"></p>
+    <p>
+      Los precios los publican las farmacias en sus catálogos públicos y pueden
+      haber cambiado. Confirma en la farmacia antes de comprar.
+    </p>
+    <p>
+      La comparación es por precio por unidad (tableta, cápsula) entre productos
+      con el mismo principio activo y la misma concentración.
+    </p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

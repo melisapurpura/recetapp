@@ -21,8 +21,14 @@ Detalles que importan al comparar:
 
 ## Estado
 
-En construcción. Por ahora el repositorio contiene las reglas del proyecto en
-[CLAUDE.md](CLAUDE.md); la interfaz y los datos están pendientes.
+Primera versión funcionando: buscador, agrupación por principio activo y
+concentración, tarjetas ordenadas por precio por unidad con la más barata
+resaltada, y la sección «Misma sustancia, más barato» al tocar una tarjeta.
+
+Los datos se recogen con dos scripts de Python (biblioteca estándar, sin
+dependencias): `scraper.py` consulta el catálogo público de La Rebaja y
+`unir.py` une esa consulta con `data/base.csv` para producir
+`data/precios.csv`, que es lo que lee la web.
 
 ## Cómo está hecho
 
