@@ -1,0 +1,8 @@
+# Los CSV se leen en el navegador: se mantienen con saltos de linea LF para
+# que el parser no tenga que lidiar con \r en Windows.
+*.csv text eol=lf
+*.py text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.js text eol=lf
+*.md text eol=lf
