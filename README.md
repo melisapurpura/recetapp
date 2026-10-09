@@ -95,8 +95,11 @@ el CSS viejo durante ese rato.
 
 ## Vista previa al compartir
 
-`vista-previa.png` (1200×630) es la imagen que muestran LinkedIn, WhatsApp y
-compañía. Se genera con `python vista_previa.py` —lo único que necesita Pillow,
+`vista-previa-2.png` (1200×630) es la imagen que muestran LinkedIn, WhatsApp y
+compañía. Las redes la pintan a menos de la mitad de su tamaño y la
+recomprimen, así que todo el texto va grande: nada por debajo de 32 px se lee.
+(`vista-previa.png`, la primera versión, se queda un tiempo porque LinkedIn
+cachea las tarjetas cerca de una semana y puede seguir pidiéndola.) Se genera con `python vista_previa.py` —lo único que necesita Pillow,
 y solo para regenerarla— y se enlaza desde las etiquetas Open Graph de
 `index.html` con url absoluta.
 
